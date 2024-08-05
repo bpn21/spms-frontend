@@ -10,7 +10,7 @@ export async function postInvoiceDetails(invoice) {
       item.price = parseFloat(item.price);
       item.quantity = parseFloat(item.quantity);
     });
-    console.log(invoice, "item is here");
+
     const response = await api.post("api/sales/invoice/", invoice).then(() => {
       Notify.create({
         color: "secondary",
@@ -18,6 +18,15 @@ export async function postInvoiceDetails(invoice) {
       });
     });
     return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+}
+export async function getInvoiceDetails(invoice) {
+  try {
+    const data = await api.get("api/sales/invoice/");
+    return data;
   } catch (error) {
     console.error(error);
     throw error;

@@ -28,6 +28,45 @@ export async function postLogin(email, password) {
 
     return response;
   } catch (error) {
+    const { response } = error;
+    Notify.create({
+      color: "negative",
+      message: response.data.message,
+    });
+    console.error(error);
+    throw error;
+  }
+}
+export async function sendOtp() {
+  try {
+    const response = await api.post("api/user/send-otp/");
+    return response;
+  } catch (e) {
+    throw e;
+  }
+}
+export async function verifyOtp(otp) {
+  try {
+    const response = await api.post("api/user/verify-otp/", otp);
+    return response;
+  } catch (e) {
+    throw e;
+  }
+}
+export async function logMeOutApi() {
+  try {
+    const response = await api.post("api/user/logout/", {
+      token: LocalStorage.getItem("token")?.refresh,
+    });
+
+    LocalStorage.set("token", response.data.token);
+    Notify.create({
+      color: "secondary",
+      message: "Successfully Logged In",
+    });
+
+    return response;
+  } catch (error) {
     Notify.create({
       color: "negative",
       message: "Incorrect email or password",

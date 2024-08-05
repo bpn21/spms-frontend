@@ -93,18 +93,20 @@ definePageMeta({
 const items = ref([
   { name: "Dashboard", icon: "dashboard", route: "dashboard" },
   { name: "Sales/Invoice", icon: "notes", route: "salesinvoice" },
+  { name: "Sales/Invoice", icon: "notes", route: "invoicelist" },
   { name: "Products", icon: "inventory", route: "products" },
   { name: "Purchase", icon: "shopping_basket", route: "purchases" },
-  { name: "Expenses", icon: "shopping_basket", route: "expenses" },
+  // { name: "Expenses", icon: "shopping_basket", route: "expenses" },
   { name: "Clients", icon: "person", route: "clients" },
   { name: "Employees", icon: "badge", route: "employees" },
-  { name: "Profit/Loss", icon: "iso", route: "profitloss" },
-  { name: "Payments", icon: "monetization_on", route: "profitloss" },
+  // { name: "Profit/Loss", icon: "iso", route: "profitloss" },
+  // { name: "Payments", icon: "monetization_on", route: "profitloss" },
 ]);
 // setup() {
 import { useAuthStore } from "@/stores/auth";
 import { LocalStorage } from "quasar";
 import { computed, onMounted, ref, watch } from "vue";
+import { logMeOutApi } from "./../data/accounts/authenticate";
 // return {}a
 // }
 export default {
@@ -119,10 +121,12 @@ export default {
     const authen = useAuthStore();
 
     function logMeOut(evnet) {
-      authen.logout();
-      LocalStorage.clear();
-      isLoggedIn.value = false;
-      navigateTo("/login");
+      logMeOutApi().then(() => {
+        authen.logout();
+        LocalStorage.clear();
+        isLoggedIn.value = false;
+        navigateTo("/login");
+      });
     }
     // authen.auth++;
     // authen.increment();

@@ -86,7 +86,11 @@
 definePageMeta({
   middleware: "guest",
 });
-import { postLogin, postRegister } from "./../data/accounts/authenticate";
+import {
+  postLogin,
+  postRegister,
+  sendOtp,
+} from "./../data/accounts/authenticate";
 import { useAuthStore } from "@/stores/auth";
 
 import { LocalStorage } from "quasar";
@@ -111,14 +115,24 @@ export default {
     // const { postLogin } = useInvoice();
     function submitLoginForm() {
       if (props.loginOrRegister == "login") {
-        postLogin(profile.value.email, profile.value.password).then(
-          (response) => {
+        postLogin(profile.value.email, profile.value.password)
+          .then((response) => {
             const token = response.data.token;
             LocalStorage.set("token", token);
             authStore.auth = true;
+            const { message } = response;
             navigateTo({ name: "dashboard" });
-          }
-        );
+          })
+          .catch((e) => {
+            const { response } = e;
+            let status = response.status;
+            let token = response.data.token;
+            if (status == 403) {
+              LocalStorage.set("token", response.data.token);
+              sendOtp();
+              navigateTo({ name: "verifyOtp" });
+            }
+          });
       } else {
         postRegister(
           profile.value.email,

@@ -54,7 +54,10 @@ export default {
   setup() {
     let isLoggedIn = ref(false);
     onMounted(() => {
-      isLoggedIn.value = ref(LocalStorage.getItem("token") ? true : false);
+      const authen = useAuthStore();
+
+      isLoggedIn.value = authen.auth;
+      if (!isLoggedIn.value) navigateTo({ name: "login" });
     });
 
     const authen = useAuthStore();

@@ -162,7 +162,8 @@
           v-if="
             formType == 'clients' ||
             formType == 'products' ||
-            formType == 'salesInvoice'
+            formType == 'salesInvoice' ||
+            formType == 'employees'
           "
         >
           <q-input
@@ -236,6 +237,41 @@
             v-model="item.quantity"
             mask="#"
             label="Quantity"
+          ></q-input>
+          <q-input
+            v-if="formType == 'employees'"
+            dense
+            class="col-md-3 col-sm-3 col-xs-3 q-pa-xs q-xs-pa-xs"
+            v-model="item.employee"
+            label="Employee"
+          ></q-input>
+          <q-input
+            v-if="formType == 'employees'"
+            dense
+            class="col-md-3 col-sm-3 col-xs-3 q-pa-xs q-xs-pa-xs"
+            v-model="item.degination"
+            label="Degination"
+          ></q-input>
+          <q-input
+            v-if="formType == 'employees'"
+            dense
+            class="col-md-3 col-sm-3 col-xs-3 q-pa-xs q-xs-pa-xs"
+            v-model="item.contact_number"
+            label="Contact Number"
+          ></q-input>
+          <q-input
+            v-if="formType == 'employees'"
+            dense
+            class="col-md-3 col-sm-3 col-xs-3 q-pa-xs q-xs-pa-xs"
+            v-model="item.emergency_contact_number"
+            label="Emergency Contact No"
+          ></q-input>
+          <q-input
+            v-if="formType == 'employees'"
+            dense
+            class="col-md-3 col-sm-3 col-xs-3 q-pa-xs q-xs-pa-xs"
+            v-model="item.address"
+            label="Address"
           ></q-input>
           <div
             v-if="formType == 'salesInvoice'"

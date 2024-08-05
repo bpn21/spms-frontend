@@ -81,7 +81,7 @@ const rows = ref([]);
 
 const submitForm = (event) => {
   // const formData = new FormData();
-  // const postData = [];
+  const postData = [];
   // event.products.forEach((i) => {
   //   formData.append("full_name", i.employee);
   //   formData.append("address", i.employee_dp);
@@ -93,16 +93,17 @@ const submitForm = (event) => {
     let obj = {
       full_name: i.employee,
       address: i.address,
-      contact_number: i.contact_no,
-      emergency_contact_number: i.emergency_contact_no,
+      contact_number: i.contact_number,
+      emergency_contact_number: i.emergency_contact_number,
       degination: i.degination,
-      image: i.employee_dp, // Assuming i.employee_dp is a File object
+      // image: i.employee_dp, // Assuming i.employee_dp is a File object
     };
     postData.push(obj);
   });
   // for (let pair of formData.entries()) {
   //   console.log(pair[0], pair[1], "post form");
   // }
+
   postEmployees(postData);
   // postEmployees([formData]);
 };
