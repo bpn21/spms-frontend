@@ -121,12 +121,19 @@ export default {
     const authen = useAuthStore();
 
     function logMeOut(evnet) {
-      logMeOutApi().then(() => {
-        authen.logout();
-        LocalStorage.clear();
-        isLoggedIn.value = false;
-        navigateTo("/login");
-      });
+      logMeOutApi()
+        .then(() => {
+          authen.logout();
+          LocalStorage.clear();
+          isLoggedIn.value = false;
+          navigateTo("/login");
+        })
+        .catch((e) => {
+          authen.logout();
+          LocalStorage.clear();
+          isLoggedIn.value = false;
+          navigateTo("/login");
+        });
     }
     // authen.auth++;
     // authen.increment();

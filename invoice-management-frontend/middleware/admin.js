@@ -10,5 +10,6 @@ export default defineNuxtRouteMiddleware((from, to, router) => {
     // return navigateTo("/login");
     abortNavigation();
   } else {
+    // navigateTo("/login");
   }
 });

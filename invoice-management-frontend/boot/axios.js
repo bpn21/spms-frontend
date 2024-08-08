@@ -2,8 +2,8 @@ import { boot } from "quasar/wrappers";
 import axios from "axios";
 import { LocalStorage } from "quasar";
 const api = axios.create({ baseURL: "http://localhost:8000/" });
+import { useAuthStore } from "@/stores/auth";
 
-import { useAuthStore } from "~/stores/auth";
 api.interceptors.request.use(
   (config) => {
     // Do something before request is sent
@@ -25,8 +25,10 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    // alert(error?.response.status);
     if (error?.response?.status === 401) {
       const authen = useAuthStore();
+      authen.auth = false;
       authen.logout();
       LocalStorage.clear();
       navigateTo("/login");

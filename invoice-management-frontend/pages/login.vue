@@ -3,8 +3,8 @@
 </template>
 
 <script setup>
-import { useAuthStore } from "@/stores/auth";
-const authen = useAuthStore();
+// import { useAuthStore } from "@/stores/auth";
+// const authen = useAuthStore();
 
 definePageMeta({
   middleware: "guest",

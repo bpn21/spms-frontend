@@ -92,7 +92,7 @@ import {
   sendOtp,
 } from "./../data/accounts/authenticate";
 import { useAuthStore } from "@/stores/auth";
-
+import { useQuasar } from "quasar";
 import { LocalStorage } from "quasar";
 
 import { ref, reactive } from "vue";
@@ -108,6 +108,7 @@ export default {
       email: "",
       password: "",
     });
+    const $q = useQuasar();
     const loginForm = ref("");
     const authStore = useAuthStore();
 
@@ -125,13 +126,6 @@ export default {
           })
           .catch((e) => {
             const { response } = e;
-            let status = response.status;
-            let token = response.data.token;
-            if (status == 403) {
-              LocalStorage.set("token", response.data.token);
-              sendOtp();
-              navigateTo({ name: "verifyOtp" });
-            }
           });
       } else {
         postRegister(

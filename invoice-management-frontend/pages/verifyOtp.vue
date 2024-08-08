@@ -14,9 +14,12 @@ const authen = useAuthStore();
 
 let loginOtp = ref("");
 const submit = () => {
-  verifyOtp({ otp: loginOtp.value })
-    .then(() => {
+  verifyOtp({ otp: loginOtp.value, id: LocalStorage.getItem("user_id") || 2 })
+    .then((response) => {
       authen.auth = true;
+      const token = response.data.token;
+      console.log(token, "token");
+      LocalStorage.set("token", token);
 
       Notify.create({
         color: "secondary",

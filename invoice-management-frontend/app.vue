@@ -35,8 +35,9 @@ onBeforeMount(() => {
 onMounted(async () => {
   token.value = LocalStorage.getItem("token");
 
-  // if (token.value) {
-  //   authen.auth = true;
-  // }
+  if (token.value) {
+    // haldle after tokem expiry in login page or in empty route
+    authen.auth = true;
+  }
 });
 </script>

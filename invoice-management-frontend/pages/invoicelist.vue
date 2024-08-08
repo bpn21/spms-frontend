@@ -169,7 +169,6 @@ export default {
 
     getInvoiceDetails().then((res) => {
       rows.value = res.data;
-      debugger;
       rows.value.forEach((i) => {
         let quantity = 0;
 
@@ -181,7 +180,6 @@ export default {
       let products = product.data.data;
       getInvoiceDetails().then((res) => {
         rows.value = res.data;
-        debugger;
         rows.value.forEach((i) => {
           let quantity = 0;
           i.products.forEach((m) => {

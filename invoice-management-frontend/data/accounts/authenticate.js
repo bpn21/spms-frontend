@@ -1,7 +1,7 @@
 import { LocalStorage } from "quasar";
 import { api } from "../../boot/axios";
 import { Notify } from "quasar";
-// const $q = useQuasar();
+const $q = useQuasar();
 
 export async function getUserProfile(email, password) {
   try {
@@ -29,10 +29,28 @@ export async function postLogin(email, password) {
     return response;
   } catch (error) {
     const { response } = error;
-    Notify.create({
-      color: "negative",
-      message: response.data.message,
-    });
+    let { status, data } = response;
+    let { errors } = data;
+
+    if (status == 404) {
+      Notify.create({
+        type: "negative",
+        message: data.error.non_field_errors[0],
+      });
+    } else if (status === 400 && response?.data?.errors?.status == 403) {
+      LocalStorage.set("user_id", response.data.errors.id);
+      navigateTo({ name: "verifyOtp" });
+    } else if (status === 400) {
+      Notify.create({
+        type: "negative",
+        message: errors.email[0],
+      });
+    } else {
+      Notify.create({
+        color: "negative",
+        message: response.data.message,
+      });
+    }
     console.error(error);
     throw error;
   }
@@ -45,9 +63,12 @@ export async function sendOtp() {
     throw e;
   }
 }
-export async function verifyOtp(otp) {
+export async function verifyOtp(otp, user_id) {
   try {
-    const response = await api.post("api/user/verify-otp/", otp);
+    const response = await api.post("api/user/verify-otp/", {
+      otp: otp,
+      user_id: user_id,
+    });
     return response;
   } catch (e) {
     throw e;
@@ -58,19 +79,15 @@ export async function logMeOutApi() {
     const response = await api.post("api/user/logout/", {
       token: LocalStorage.getItem("token")?.refresh,
     });
-
+    const { data } = response;
     LocalStorage.set("token", response.data.token);
     Notify.create({
       color: "secondary",
-      message: "Successfully Logged In",
+      message: data.msg,
     });
 
     return response;
   } catch (error) {
-    Notify.create({
-      color: "negative",
-      message: "Incorrect email or password",
-    });
     console.error(error);
     throw error;
   }

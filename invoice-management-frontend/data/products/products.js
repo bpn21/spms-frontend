@@ -5,7 +5,6 @@ import { Notify } from "quasar";
 export async function postProducts(products) {
   try {
     const response = await api.post("api/sales/products/", products);
-    debugger;
     Notify.create({
       color: "secondary",
       message: response.data.data,
