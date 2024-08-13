@@ -133,7 +133,46 @@ export default {
           profile.value.fullName,
           profile.value.password,
           profile.value.confirmPassword
-        );
+        )
+          .then((res) => {
+            $q.notify({
+              color: "secondary",
+              message: res.data.msg,
+            });
+          })
+          .catch((e) => {
+            const { response } = e;
+            const { status, data } = response;
+            const errorMessages = [];
+            if (data && data.errors) {
+              for (const field in data.errors) {
+                const messages = data.errors[field];
+                if (field == "non_field_errors") {
+                  messages.forEach((message) => {
+                    $q.notify({
+                      color: "negative",
+                      message: `${message}`,
+                    });
+                  });
+                } else {
+                  messages.forEach((message) => {
+                    $q.notify({
+                      color: "negative",
+                      message: `${field}: ${message}`,
+                    });
+                  });
+                }
+              }
+            }
+            // const fullErrorMessage = errorMessages.join(" | "); // Join all error messages with a separator
+            for (let errorMessage in errorMessages) {
+              $q.notify({
+                color: "negative",
+                message:
+                  errorMessages[errorMessage] || "An unknown error occurred", // Fallback message if no errors
+              });
+            }
+          });
       }
     }
     return { profile, loginForm, submitLoginForm };
