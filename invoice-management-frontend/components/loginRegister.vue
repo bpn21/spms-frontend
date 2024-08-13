@@ -164,7 +164,7 @@ export default {
                 }
               }
             }
-å            for (let errorMessage in errorMessages) {
+            for (let errorMessage in errorMessages) {
               $q.notify({
                 color: "negative",
                 message:
