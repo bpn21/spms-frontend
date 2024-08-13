@@ -57,7 +57,7 @@ export default {
       const authen = useAuthStore();
 
       isLoggedIn.value = authen.auth;
-      if (!isLoggedIn.value) navigateTo({ name: "login" });
+      if (!authen.auth) navigateTo({ name: "login" });
     });
 
     const authen = useAuthStore();

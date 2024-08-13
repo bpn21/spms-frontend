@@ -5,10 +5,8 @@
 <script setup>
 // import { useAuthStore } from "@/stores/auth";
 // const authen = useAuthStore();
-
 definePageMeta({
   middleware: "guest",
-  layout: "custom",
 });
 </script>
 <style>

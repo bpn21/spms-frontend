@@ -6,7 +6,7 @@ export default defineNuxtRouteMiddleware((from, to, router) => {
 
   const token = LocalStorage.getItem("token");
 
-  if (authen.auth) {
+  if (authen.auth || token) {
     return navigateTo("/dashboard");
   } else {
     // return abortNavigation();
