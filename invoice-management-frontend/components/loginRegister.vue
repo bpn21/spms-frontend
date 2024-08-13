@@ -164,8 +164,7 @@ export default {
                 }
               }
             }
-            // const fullErrorMessage = errorMessages.join(" | "); // Join all error messages with a separator
-            for (let errorMessage in errorMessages) {
+å            for (let errorMessage in errorMessages) {
               $q.notify({
                 color: "negative",
                 message:
