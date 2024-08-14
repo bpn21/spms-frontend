@@ -9,7 +9,5 @@ export default defineNuxtRouteMiddleware((from, to, router) => {
   if (authen.auth || token) {
     return navigateTo("/dashboard");
   } else {
-    // return abortNavigation();
-    // if (from.fullpath == "/login") return navigateTo("/login");
   }
 });
