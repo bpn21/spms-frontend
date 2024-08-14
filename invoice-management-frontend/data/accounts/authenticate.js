@@ -31,14 +31,14 @@ export async function postLogin(email, password) {
     const { response } = error;
     let { status, data } = response;
     let { errors } = data;
-
+    debugger;
     if (status == 404) {
       Notify.create({
         type: "negative",
         message: data.error.non_field_errors[0],
       });
-    } else if (status === 400 && response?.data?.errors?.status == 403) {
-      LocalStorage.set("user_id", response.data.errors.id);
+    } else if (status === 412) {
+      LocalStorage.set("user_id", response.data.user_id);
       navigateTo({ name: "verifyOtp" });
     } else if (status === 400) {
       Notify.create({
