@@ -102,6 +102,11 @@ export async function postRegister(email, fullName, password, confirmPassword) {
       password,
       password2,
     });
+    Notify.create({
+      color: "secondary",
+      message: "Successfully Registered",
+    });
+
     return response;
   } catch (error) {
     throw error;
