@@ -14,7 +14,7 @@ const authen = useAuthStore();
 
 let loginOtp = ref("");
 const submit = () => {
-  verifyOtp({ otp: loginOtp.value, id: LocalStorage.getItem("user_id") || 2 })
+  verifyOtp({ otp: loginOtp.value, id: LocalStorage.getItem("user_id") })
     .then((response) => {
       authen.auth = true;
       const token = response.data.token;
@@ -28,7 +28,7 @@ const submit = () => {
       navigateTo({ name: "dashboard" });
     })
     .catch((e) => {
-      LocalStorage.clear();
+      // LocalStorage.clear();
     });
 };
 </script>
