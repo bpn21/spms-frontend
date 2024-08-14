@@ -43,6 +43,11 @@
 </template>
 
 <script setup>
+definePageMeta({
+  middleware: "admin",
+  layout: "default",
+});
+
 // import { env } from "process";
 import dynamicForm from "~/components/dynamicForm.vue";
 import { postClients, getClients } from "~/data/clients/clients";
