@@ -23,7 +23,7 @@ export async function postLogin(email, password) {
     LocalStorage.set("token", response.data.token);
     Notify.create({
       color: "secondary",
-      message: "Successfully Logged In",
+      message: response.data.msg,
     });
 
     return response;
@@ -31,7 +31,6 @@ export async function postLogin(email, password) {
     const { response } = error;
     let { status, data } = response;
     let { errors } = data;
-    debugger;
     if (status == 404) {
       Notify.create({
         type: "negative",
@@ -39,6 +38,10 @@ export async function postLogin(email, password) {
       });
     } else if (status === 412) {
       LocalStorage.set("user_id", response.data.user_id);
+      Notify.create({
+        type: "negative",
+        message: errors,
+      });
       navigateTo({ name: "verifyOtp" });
     } else if (status === 400) {
       Notify.create({
@@ -48,7 +51,7 @@ export async function postLogin(email, password) {
     } else {
       Notify.create({
         color: "negative",
-        message: response.data.message,
+        message: response.data.message || "Something went wrong",
       });
     }
     console.error(error);

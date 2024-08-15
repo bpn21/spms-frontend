@@ -121,7 +121,7 @@ export default {
             const token = response.data.token;
             LocalStorage.set("token", token);
             authStore.auth = true;
-            const { message } = response;
+            // const { message } = response;
             navigateTo({ name: "dashboard" });
           })
           .catch((e) => {

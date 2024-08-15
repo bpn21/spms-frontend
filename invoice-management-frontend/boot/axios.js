@@ -7,15 +7,16 @@ import { useAuthStore } from "@/stores/auth";
 api.interceptors.request.use(
   (config) => {
     const token = LocalStorage.getItem("token")?.access;
-    const userAgent = navigator.userAgent;
     const screenWidth = window.screen.width;
     const screenHeight = window.screen.height;
-    const modifiedUserAgent = `${userAgent} (Screen: ${screenWidth}x${screenHeight})`;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    config.headers["User-Agent"] = modifiedUserAgent;
-
+    // config.headers["User-Agent"] = modifiedUserAgent;
+    config.data = {
+      ...config.data,
+      screen_size: `${screenWidth}x${screenHeight}`,
+    };
     return config;
   },
   (error) => {
