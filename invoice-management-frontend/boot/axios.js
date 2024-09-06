@@ -31,16 +31,18 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    // alert(error?.response.status);
-    if (error?.response?.status === 401) {
+    const { status } = error.response;
+    const orginalRequest = error.config;
+    if (orginalRequest.url == "api/token/refresh/") {
       const authen = useAuthStore();
       authen.auth = false;
       authen.logout();
       LocalStorage.clear();
       navigateTo("/login");
     }
+    if (status != 401) return Promise.reject(error);
+
     // Do something with request error
-    return Promise.reject(error);
   }
 );
 
