@@ -1,4 +1,5 @@
 // stores/counter.js
+import { api } from "./../boot/axios";
 import { defineStore } from "pinia";
 import { LocalStorage } from "quasar";
 const token = LocalStorage.getItem("token");
@@ -17,12 +18,21 @@ export const useAuthStore = defineStore("auth", {
   },
   actions: {
     login() {
-      // this.auth++;
       this.$patch({ auth: true }); // Use this.$patch instead of this.setAuth
-      // console.log("localstorage", LocalStorage.getItem("token"));
     },
     logout() {
       this.$patch({ auth: false }); // Use this.$patch instead of this.setAuth
+    },
+
+    refresh(payload) {
+      return new Promise((resolve, reject) => {
+        try {
+          const data = api.post("api/user/refresh/", payload);
+          resolve(data);
+        } catch (error) {
+          reject(error);
+        }
+      });
     },
   },
 });

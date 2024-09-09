@@ -33,14 +33,20 @@ api.interceptors.response.use(
   (error) => {
     const { status } = error.response;
     const orginalRequest = error.config;
-    if (orginalRequest.url == "api/token/refresh/") {
-      const authen = useAuthStore();
+    const authen = useAuthStore();
+
+    if (orginalRequest.url == "api/user/refresh/") {
       authen.auth = false;
       authen.logout();
       LocalStorage.clear();
       navigateTo("/login");
     }
     if (status != 401) return Promise.reject(error);
+    authen
+      .refresh({ refresh: LocalStorage.getItem("token")?.refresh })
+      .then((res) => {
+        LocalStorage.set(token, res.data);
+      });
 
     // Do something with request error
   }
