@@ -9,10 +9,15 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@eslint/js": "^9.10.0",
     "@nuxt/devtools": "latest",
     "@types/node": "^18",
+    "eslint": "^9.10.0",
+    "eslint-plugin-vue": "^9.28.0",
+    "globals": "^15.9.0",
     "nuxt": "^3.5.2",
-    "nuxt-quasar-ui": "^2.0.2"
+    "nuxt-quasar-ui": "^2.0.2",
+    "typescript-eslint": "^8.5.0"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.11",
