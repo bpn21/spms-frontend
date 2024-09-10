@@ -11,7 +11,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: yarn
-      - run: yarn run prod
+      - run: yarn run build
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
