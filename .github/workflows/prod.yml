@@ -5,7 +5,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: nvm use 19
+      # - run: nvm use 19
       - run: yarn
       - run: yarn run prod
       - name: Check out repository code
