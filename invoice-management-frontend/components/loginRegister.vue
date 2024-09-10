@@ -125,7 +125,12 @@ export default {
             navigateTo({ name: "dashboard" });
           })
           .catch((e) => {
-            const { response } = e;
+            const { data, status } = e.response;
+            $q.notify({
+              icon: "warning",
+              color: "warning",
+              message: data.message,
+            });
           });
       } else {
         postRegister(
