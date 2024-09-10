@@ -1,35 +1,33 @@
-import { boot } from "quasar/wrappers";
 import axios from "axios";
 import { LocalStorage } from "quasar";
-const api = axios.create({ baseURL: "http://localhost:8000/" });
 import { useAuthStore } from "@/stores/auth";
+
+const api = axios.create({ baseURL: "http://localhost:8000/" });
 
 api.interceptors.request.use(
   (config) => {
     const token = LocalStorage.getItem("token")?.access;
     const screenWidth = window.screen.width;
     const screenHeight = window.screen.height;
+    const screenSize = `${screenWidth}x${screenHeight}`;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    if (config.url == "api/users/verify-otp/") {
+    if (config.url == "api/users/login/")
       config.data = {
         ...config.data,
-        screen_size: `${screenWidth}x${screenHeight}`,
+        screen_size: screenSize,
       };
-    }
 
     return config;
   },
   (error) => {
-    // Do something with request error
     return Promise.reject(error);
   }
 );
 
 api.interceptors.response.use(
   (response) => {
-    // Do something before request is sent
     return response;
   },
   (error) => {
@@ -38,17 +36,19 @@ api.interceptors.response.use(
     const authen = useAuthStore();
 
     if (orginalRequest.url == "api/user/refresh/") {
-      authen.auth = false;
       authen.logout();
-      LocalStorage.clear();
       navigateTo("/login");
     }
+
     if (status != 401) return Promise.reject(error);
-    authen
-      .refresh({ refresh: LocalStorage.getItem("token")?.refresh })
-      .then((res) => {
-        LocalStorage.set(token, res.data);
-      });
+
+    if (!authen.isRefreshing) {
+      authen
+        .refresh({ refresh: LocalStorage.getItem("token")?.refresh })
+        .then(() => {
+          return Promise.resolve(api.request(orginalRequest.url));
+        });
+    }
 
     // Do something with request error
   }
