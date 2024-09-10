@@ -11,6 +11,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: yarn
+        # Set NODE_ENV to production
+      - name: Set NODE_ENV to production
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
       - run: yarn run build
       - name: List files in the repository
         run: |
