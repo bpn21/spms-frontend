@@ -2,37 +2,39 @@
 import { api } from "./../boot/axios";
 import { defineStore } from "pinia";
 import { LocalStorage } from "quasar";
-const token = LocalStorage.getItem("token");
 export const useAuthStore = defineStore("auth", {
   state: () => {
-    return { auth: LocalStorage.getItem("token") ? true : false };
+    return {
+      auth: LocalStorage.getItem("token") ? true : false,
+      isRefreshing: false,
+    };
   },
 
-  // could also be defined as
-  // state: () => ({ auth: 0 })
-  // Mutations
-  mutations: {
-    setAuth(value) {
-      this.auth = value;
-    },
-  },
   actions: {
     login() {
       this.$patch({ auth: true }); // Use this.$patch instead of this.setAuth
     },
     logout() {
-      this.$patch({ auth: false }); // Use this.$patch instead of this.setAuth
+      this.auth = false;
+      LocalStorage.clear();
     },
-
-    refresh(payload) {
-      return new Promise((resolve, reject) => {
-        try {
-          const data = api.post("api/user/refresh/", payload);
-          resolve(data);
-        } catch (error) {
-          reject(error);
-        }
-      });
+    setAuth(value) {
+      this.auth = value;
+    },
+    setIsRefreshing(value) {
+      this.isRefreshing = value;
+    },
+    async refresh(payload) {
+      this.setIsRefreshing(true);
+      try {
+        // this.$patch({ isRefreshing: true });
+        const response = await api.post("api/user/refresh/", payload);
+        debugger;
+        LocalStorage.set("token", response.data);
+        this.setIsRefreshing(false);
+      } catch (error) {
+        reject(error);
+      }
     },
   },
 });
