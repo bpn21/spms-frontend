@@ -11,9 +11,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - run: yarn
-        # Set NODE_ENV to production
+      # Set NODE_ENV to production
       - name: Set NODE_ENV to production
         run: echo "NODE_ENV=production" >> $GITHUB_ENV
+      # Run ESLint
+      - name: Run ESLint to check for debugger statements
+        run: yarn eslint . --ext .js,.mjs,.cjs,.ts,.vue
       - run: yarn run build
       - name: List files in the repository
         run: |
