@@ -16,14 +16,14 @@ let loginOtp = ref("");
 const submit = () => {
   verifyOtp({ otp: loginOtp.value, id: LocalStorage.getItem("user_id") })
     .then((response) => {
+      const { data } = response;
       authen.auth = true;
       const token = response.data.token;
-      console.log(token, "token");
       LocalStorage.set("token", token);
 
       Notify.create({
         color: "secondary",
-        message: "Otp has been successfully sent to your email",
+        message: data.message,
       });
       navigateTo({ name: "dashboard" });
     })
