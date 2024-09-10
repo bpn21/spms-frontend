@@ -38,23 +38,8 @@ export async function postLogin(email, password) {
       });
     } else if (status === 412) {
       LocalStorage.set("user_id", response.data.user_id);
-      Notify.create({
-        type: "negative",
-        message: errors,
-      });
       navigateTo({ name: "verifyOtp" });
-    } else if (status === 400) {
-      Notify.create({
-        type: "negative",
-        message: errors.email[0],
-      });
-    } else {
-      Notify.create({
-        color: "negative",
-        message: response.data.message || "Something went wrong",
-      });
     }
-    console.error(error);
     throw error;
   }
 }
@@ -66,12 +51,9 @@ export async function sendOtp() {
     throw e;
   }
 }
-export async function verifyOtp(otp, user_id) {
+export async function verifyOtp(payload) {
   try {
-    const response = await api.post("api/user/verify-otp/", {
-      otp: otp,
-      user_id: user_id,
-    });
+    const response = await api.post("api/user/verify-otp/", payload);
     return response;
   } catch (e) {
     throw e;
