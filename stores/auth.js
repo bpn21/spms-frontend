@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("auth", {
         // this.$patch({ isRefreshing: true });
         const response = await api.post("api/user/refresh/", payload);
         debugger;
-        // debugger;
+        debugger;
         LocalStorage.set("token", response.data);
         this.setIsRefreshing(false);
       } catch (error) {
