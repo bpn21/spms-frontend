@@ -12,11 +12,13 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    // config.headers["User-Agent"] = modifiedUserAgent;
-    config.data = {
-      ...config.data,
-      screen_size: `${screenWidth}x${screenHeight}`,
-    };
+    if (config.url == "api/users/verify-otp/") {
+      config.data = {
+        ...config.data,
+        screen_size: `${screenWidth}x${screenHeight}`,
+      };
+    }
+
     return config;
   },
   (error) => {
