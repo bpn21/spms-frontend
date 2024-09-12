@@ -43,9 +43,15 @@
 </template>
 
 <script setup>
-// import { env } from "process";
 import dynamicForm from "~/components/dynamicForm.vue";
 import { postProducts, getProducts } from "~/data/products/products";
+import { useAuthStore } from "@/stores/auth";
+definePageMeta({
+  middleware: "admin",
+  layout: "default",
+});
+const authen = useAuthStore();
+
 let searchProduct = ref("");
 const columns = ref([
   {

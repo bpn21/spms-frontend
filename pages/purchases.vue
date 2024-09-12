@@ -47,6 +47,11 @@
 import dynamicForm from "~/components/dynamicForm.vue";
 import { postClients, getClients } from "~/data/clients/clients";
 let searchProduct = ref("");
+definePageMeta({
+  middleware: "admin",
+  layout: "default",
+});
+
 const columns = ref([
   {
     name: "name",
