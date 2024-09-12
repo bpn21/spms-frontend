@@ -13,7 +13,7 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
-    if (config.url == "api/users/login/")
+    if (config.url == "api/user/login/" || config.url == "api/user/logout/")
       config.data = {
         ...config.data,
         screen_size: screenSize,
