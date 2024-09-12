@@ -19,4 +19,7 @@ export default [
       "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
     },
   },
+  {
+    ignores: ["**/*.ts", "node_modules/", "dist/", "**/temp.js", "config/*"],
+  },
 ];
