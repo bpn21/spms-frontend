@@ -29,11 +29,11 @@ export const useAuthStore = defineStore("auth", {
       try {
         // this.$patch({ isRefreshing: true });
         const response = await api.post("api/user/refresh/", payload);
-        debugger;
-        debugger;
         LocalStorage.set("token", response.data);
         this.setIsRefreshing(false);
       } catch (error) {
+        this.setIsRefreshing(false);
+        this.auth = false;
         reject(error);
       }
     },
