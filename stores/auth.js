@@ -34,7 +34,7 @@ export const useAuthStore = defineStore("auth", {
       } catch (error) {
         this.setIsRefreshing(false);
         this.auth = false;
-        reject(error);
+        // reject(error);``
       }
     },
   },
