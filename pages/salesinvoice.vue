@@ -9,7 +9,7 @@
       :products="allProducts"
       :clients="allClients"
       :employees="allEmployees"
-      :searchLabel="'Search Invoice'"
+      :searchLabel="'Search Product'"
       :userProfile="userProfile"
     />
   </div>

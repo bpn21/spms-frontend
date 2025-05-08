@@ -6,7 +6,6 @@ export default defineNuxtConfig({
   ],
   devtools: { enabled: false },
   quasar: {
-    
     plugins: ['Notify'],
   },
   env: {
@@ -16,7 +15,7 @@ export default defineNuxtConfig({
     'class-validator': 'class-validator/cjs/index.js',
   },
   router: {
-    middleware: ['admin,guest'], // Add the middleware here
+    middleware: ['admin, guest'], 
   },
   
 

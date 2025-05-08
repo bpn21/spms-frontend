@@ -1,1 +1,1 @@
-export { default } from "file:///Users/macbookair/Documents/sshp/frontend/spms-frontend/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"
+export { default } from "file:///Users/macbookair/Documents/bipingaire/sshp/frontend/spms-frontend/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"
