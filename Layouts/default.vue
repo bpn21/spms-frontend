@@ -44,7 +44,7 @@
       <template v-slot:mini>
         <q-scroll-area class="fit mini-slot cursor-pointer">
           <div class="text-bold" v-for="(item, index) in items" :key="index">
-            <q-item class="q-pa-lg" :to="item.route">
+            <q-item class="q-pa-sm" :to="item.route">
               <q-icon size="md" :name="item.icon"></q-icon>
             </q-item>
           </div>
@@ -53,7 +53,7 @@
 
       <q-scroll-area class="fit">
         <div class="text-bold" v-for="(item, index) in items" :key="index">
-          <q-item class="q-pa-lg" :to="item.route">
+          <q-item class="q-pa-sm" :to="item.route">
             {{ item.name }}
             <q-space></q-space>
             <q-icon size="sm" :name="item.icon"></q-icon>
@@ -79,7 +79,7 @@
     </q-drawer>
 
     <q-page-container>
-      <q-page class="q-px-lg q-py-md"><NuxtPage /> </q-page>
+      <q-page class="q-px-sm q-py-md"><NuxtPage /> </q-page>
     </q-page-container>
   </q-layout>
 </template>

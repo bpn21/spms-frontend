@@ -28,7 +28,7 @@
       </q-header>
 
       <q-page-container>
-        <q-page class="q-pa-md">
+        <q-page class="q-pa-sm">
           <NuxtPage />
         </q-page>
         <q-page-scroller position="bottom">
