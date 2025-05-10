@@ -1,6 +1,5 @@
 <template>
   <div v-show="serverReady">
-    {{ authen.auth }}
     <div v-if="authen.auth">
       <NuxtLayout name="default"></NuxtLayout>
     </div>
