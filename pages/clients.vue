@@ -1,23 +1,22 @@
 <template>
-  <div>
-    <dynamicForm
-      :formType="'clients'"
-      :submitName="'Sumbit Clients'"
-      :addMoreLabel="'Add More Clients'"
-      @formDetails="submitForm($event)"
-      :products="rows"
-      :searchLabel="'Search Client'"
-    />
-  </div>
+  <div class="zoom-out">
+    <div class="">
+      <dynamicForm
+        :formType="'clients'"
+        :submitName="'Sumbit Clients'"
+        :addMoreLabel="'Add More Clients'"
+        @formDetails="submitForm($event)"
+        :products="rows"
+        :searchLabel="'Search Client'"
+      />
+    </div>
 
-  <div class="row justify-center">
-    <q-bar class="bg-grey-3 col-md-11 q-ma-md">
+    <div class="row q-py-sm">
       <q-input
-        rounded
         outlined
         dense
         :label="formType == 'salesInvoice' ? ' Search Items' : 'Search Product'"
-        v-model="searchProduct"
+        v-model="searchClient"
       >
         <template v-slot:append>
           <q-avatar>
@@ -26,19 +25,19 @@
         </template>
       </q-input>
       <q-space></q-space>
-    </q-bar>
-  </div>
+    </div>
 
-  <div class="row justify-center">
-    <q-table
-      flat
-      class="bg-grey-3 col-md-11"
-      bordered
-      :rows="filteredProducts"
-      :columns="columns"
-      row-key="name"
-      :pagination="initialPagination"
-    />
+    <div class="">
+      <q-table
+        flat
+        class="bg-grey-3"
+        bordered
+        :rows="filteredClients"
+        :columns="columns"
+        row-key="name"
+        :pagination="initialPagination"
+      />
+    </div>
   </div>
 </template>
 
@@ -50,35 +49,36 @@ definePageMeta({
 
 // import { env } from "process";
 import dynamicForm from "~/components/dynamicForm.vue";
+import { useQuasar } from "quasar";
 import { postClients, getClients } from "~/data/clients/clients";
-let searchProduct = ref("");
+const searchClient = ref("");
+const $q = useQuasar();
 const columns = ref([
   {
-    name: "name",
+    name: "client_name",
     align: "center",
-    label: "Products",
-    field: "name",
+    label: "Client",
+    field: "client_name",
     sortable: true,
   },
   {
-    name: "brand",
+    name: "address_line_1",
     align: "center",
-    label: "Brand",
-    field: "brand",
+    label: "Address Line 1",
+    field: "address_line_1",
     sortable: true,
   },
   {
-    name: "size",
+    name: "address_line_2",
     align: "center",
-    label: "Size",
-    field: "size",
+    label: "Address Line 2",
+    field: "address_line_2",
     sortable: true,
   },
 ]);
 const rows = ref([]);
 
 const submitForm = (event) => {
-  console.log(event, "event is here");
   let products = event.products.map((i) => {
     return {
       client_name: i.client,
@@ -86,21 +86,33 @@ const submitForm = (event) => {
       pan_number: i.pan_number,
       address_line_1: i.address_line_1,
       address_line_2: i.address_line_2,
-      contact_number: "9869177567",
-      remarks: "remarks",
-      status: "Active",
+      contact_number: i.phone_number,
+      remarks: i.remarks || "Remarks",
+      status: i.status || "Active",
     };
   });
-  console.log(products, "products is here");
-  postClients(products);
+  postClients(products).then((res) => {
+    rows.value.unshift(...res.data);
+    $q.notify({
+      type: "positive",
+      message: `New Client Added`,
+    });
+  });
 };
 const fetchClients = () => {
   getClients().then((res) => {
-    rows.value = res.data.data;
+    rows.value = res.data;
   });
 };
-const filteredProducts = computed(() => {
-  return rows.value.filter((i) => i.name.includes(searchProduct.value));
+const filteredClients = computed(() => {
+  return rows.value.filter((i) => i.client_name.includes(searchClient.value));
 });
 fetchClients();
 </script>
+<style>
+.zoom-out {
+  transform: scale(0.9);
+  transform-origin: top left;
+  width: calc(100% / 0.9);
+}
+</style>
