@@ -1,13 +1,21 @@
 <template>
-  <!-- <NuxtLayout name="custom"> -->
+  <div class="row">
+    <div class="col-12">
+      <CountCards />
+    </div>
+  </div>
+  <div class="q-py-sm">
+    <InvoiceTable />
+  </div>
   <div v-if="authen.auth">Dashboard Page</div>
-  <!-- </NuxtLayout> -->
-  <slot />
 </template>
 <script setup>
 import { LocalStorage } from "quasar";
 import { useAuthStore } from "@/stores/auth";
 import { computed, onMounted } from "vue";
+import CountCards from "~/components/dashboard/countCards.vue";
+import InvoiceTable from "@/components/invoice/invoiceTable.vue";
+
 definePageMeta({
   middleware: "admin",
   layout: "default",
