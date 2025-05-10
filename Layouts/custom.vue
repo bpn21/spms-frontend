@@ -1,42 +1,41 @@
 <template>
   <!-- Access the state directly from the store -->
   <!-- <div>Is Logged In:???? {{ isLoggedIn }}</div> -->
-  <div class="q-pa-xs">
-    <q-layout
-      view="hhr lpr ffr"
-      container
-      style="height: 99vh"
-      class="shadow-2 rounded-borders"
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
-    >
-      <q-header
-        reveal
-        :class="
-          $q.dark.isActive ? 'bg-secondary text-center' : 'bg-black text-center'
-        "
-      >
-        <q-toolbar>
-          <q-btn
-            flat
-            @click="drawerRight = !drawerRight"
-            round
-            dense
-            icon="menu"
-          />
-          <q-toolbar-title>Invoice Management System</q-toolbar-title>
-        </q-toolbar>
-      </q-header>
 
-      <q-page-container>
-        <q-page class="q-pa-sm">
-          <NuxtPage />
-        </q-page>
-        <q-page-scroller position="bottom">
-          <q-btn fab icon="keyboard_arrow_up" color="red" />
-        </q-page-scroller>
-      </q-page-container>
-    </q-layout>
-  </div>
+  <q-layout
+    view="hhr lpr ffr"
+    container
+    style="height: 99vh"
+    class="shadow-2 rounded-borders"
+    :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+  >
+    <q-header
+      reveal
+      :class="
+        $q.dark.isActive ? 'bg-secondary text-center' : 'bg-black text-center'
+      "
+    >
+      <q-toolbar>
+        <q-btn
+          flat
+          @click="drawerRight = !drawerRight"
+          round
+          dense
+          icon="menu"
+        />
+        <q-toolbar-title>Invoice Management System</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container>
+      <q-page class="q-pa-sm">
+        <NuxtPage />
+      </q-page>
+      <q-page-scroller position="bottom">
+        <q-btn fab icon="keyboard_arrow_up" color="red" />
+      </q-page-scroller>
+    </q-page-container>
+  </q-layout>
 </template>
 
 <script>

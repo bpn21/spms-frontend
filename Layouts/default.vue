@@ -2,13 +2,12 @@
   <!-- Access the state directly from the store -->
   <!-- <div>Is Logged In:???? {{ isLoggedIn }}</div> -->
 
-  <q-layout
-    view="hHh Lpr lff"
-    container
-    style="height: 100vh"
-    class="shadow-2 rounded-borders"
-  >
-    <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
+  <q-layout view="hHh Lpr lff" container style="height: 100vh" class="shadow-2">
+    <q-header
+      elevated
+      :class="$q.dark.isActive ? 'bg-secondary' : 'bg-grey-9'"
+      flat
+    >
       <q-toolbar>
         <q-btn
           flat
@@ -21,9 +20,9 @@
           icon="menu"
         />
 
-        <q-toolbar-title class="text-center"
-          >Invoice Management System</q-toolbar-title
-        >
+        <q-toolbar-title class="text-center">
+          INVOICE Management System
+        </q-toolbar-title>
 
         <div style="cursor: pointer" class="q-mx-md" @click="logMeOut(event)">
           Logout
@@ -39,7 +38,7 @@
       :width="200"
       :breakpoint="500"
       bordered
-      :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+      :class="$q.dark.mode ? 'bg-grey-1' : 'bg-grey-3'"
     >
       <template v-slot:mini>
         <q-scroll-area class="fit mini-slot cursor-pointer">
@@ -92,13 +91,13 @@ definePageMeta({
 
 const items = ref([
   { name: "Dashboard", icon: "dashboard", route: "dashboard" },
-  { name: "Sales/Invoice", icon: "notes", route: "salesinvoice" },
-  { name: "Sales/Invoice", icon: "notes", route: "invoicelist" },
+  { name: "New Invoice", icon: "description", route: "salesinvoice" },
+  { name: "Invoices", icon: "notes", route: "invoicelist" },
   { name: "Products", icon: "inventory", route: "products" },
-  { name: "Purchase", icon: "shopping_basket", route: "purchases" },
+  // { name: "Purchase", icon: "shopping_basket", route: "purchases" },
   // { name: "Expenses", icon: "shopping_basket", route: "expenses" },
   { name: "Clients", icon: "person", route: "clients" },
-  { name: "Employees", icon: "badge", route: "employees" },
+  // { name: "Employees", icon: "badge", route: "employees" },
   // { name: "Profit/Loss", icon: "iso", route: "profitloss" },
   // { name: "Payments", icon: "monetization_on", route: "profitloss" },
 ]);
