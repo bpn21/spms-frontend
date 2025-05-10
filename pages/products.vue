@@ -10,29 +10,25 @@
     />
   </div>
 
-  <div class="row justify-center">
-    <q-bar class="bg-grey-3 col-md-11 q-ma-md">
-      <q-input
-        rounded
-        outlined
-        dense
-        :label="formType == 'salesInvoice' ? ' Search Items' : 'Search Product'"
-        v-model="searchProduct"
-      >
-        <template v-slot:append>
-          <q-avatar>
-            <q-icon size="md" name="search" />
-          </q-avatar>
-        </template>
-      </q-input>
-      <q-space></q-space>
-    </q-bar>
+  <div class="q-py-md">
+    <q-input
+      outlined
+      dense
+      :label="formType == 'salesInvoice' ? ' Search Items' : 'Search Product'"
+      v-model="searchProduct"
+    >
+      <template v-slot:append>
+        <q-avatar>
+          <q-icon size="md" name="search" />
+        </q-avatar>
+      </template>
+    </q-input>
   </div>
 
-  <div class="row justify-center">
+  <div class="">
     <q-table
       flat
-      class="bg-grey-3 col-md-11"
+      class="bg-grey-3"
       bordered
       :rows="filteredProducts"
       :columns="columns"
