@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center">
+  <div class="row justify-center zoom-out">
     <dynamicForm
       v-if="authen.auth"
       @formDetails="submitFormData($event)"
@@ -38,8 +38,17 @@ definePageMeta({
 });
 import dynamicForm from "~/components/dynamicForm.vue";
 import { getClients } from "~/data/clients/clients";
+import { useQuasar } from "quasar";
+
+const $q = useQuasar();
 const submitFormData = (event) => {
-  postInvoiceDetails(event).then(() => {});
+  event.employee = userProfile.value;
+  postInvoiceDetails(event).then(() => {
+    $q.notify({
+      type: "positive",
+      message: `Invoice has been created for ${event.client}`,
+    });
+  });
 };
 const fetchProducts = () => {
   getProducts().then((res) => {
@@ -53,7 +62,7 @@ const fetchUserProfile = () => {
 };
 const fetchClients = () => {
   getClients().then((res) => {
-    allClients.value = res.data.data;
+    allClients.value = res.data;
   });
 };
 const fetchEmployees = () => {
@@ -66,3 +75,10 @@ fetchUserProfile();
 fetchClients();
 fetchEmployees();
 </script>
+<style>
+.zoom-out {
+  transform: scale(0.9);
+  transform-origin: top left;
+  width: calc(100% / 0.9);
+}
+</style>
